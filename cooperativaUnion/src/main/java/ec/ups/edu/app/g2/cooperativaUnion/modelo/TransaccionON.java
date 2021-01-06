@@ -151,6 +151,7 @@ public class TransaccionON {
 		Respuesta res = null;
 		CuentaAhorro origen = cuentaDao.buscarCuentaAhorro(trx.getCuentaorigen());
 		CuentaAhorro destino = cuentaDao.buscarCuentaAhorro(trx.getCuentadestino());
+System.out.println(origen.toString());
 
 		if (trx.getTipo().equals("tranferencia")) {
 			if (destino == null)
@@ -184,19 +185,99 @@ public class TransaccionON {
 				cuentaDao.update(origen);
 				cuentaDao.update(destino);
 
-				List<CuentaAhorro> cuentas = cuentaDao.getCuentas(origen.getNumeroCuenta(), destino.getNumeroCuenta());
+				/*List<CuentaAhorro> cuentas = cuentaDao.getCuentas(origen.getNumeroCuenta(), destino.getNumeroCuenta());
 
 				for (CuentaAhorro cs : cuentas) {
 					System.out.println(cs.toString());
-				}
+				}*/
 				res = new Respuesta();
 				res.setCodigo(1);
 				res.setMensaje("Ok");
-				res.setCuentasafectadas(cuentas);
+			//	res.setCuentasafectadas(cuentas);
 			}
 		}
 		return res;
 	}
+	public Respuesta Deposito(Trans trx) throws Exception {
+
+		Respuesta res = null;
+		
+		CuentaAhorro destino = cuentaDao.buscarCuentaAhorro(trx.getCuentadestino());
+
+
+		if (trx.getTipo().equals("deposito")) {
+			if (destino == null)
+				throw new Exception("La cuentas no existe");
+
+			if ( trx.getCuentadestino() != null) {
+				
+				Double saldoDes = destino.getSaldoCuenta() + trx.getMonto();
+
+				destino.setSaldoCuenta(saldoDes);
+
+				Transaccion tDes = new Transaccion();
+
+				tDes.setCuent(trx.getCuentadestino());
+				tDes.setFecha(new Date());
+				tDes.setTipoTransaccion("deposito");
+				tDes.setMonto(trx.getMonto());
+
+			
+				destino.addTransaccion(tDes);
+				
+				transaccionDao.nuevaTransaccion(tDes);
+				
+				cuentaDao.update(destino);
+
+				res = new Respuesta();
+				res.setCodigo(1);
+				res.setMensaje("Ok");
+			
+			}
+		}
+		return res;
+	}
+	
+	public Respuesta Retiro(Trans trx) throws Exception {
+
+		Respuesta res = null;
+		
+		CuentaAhorro destino = cuentaDao.buscarCuentaAhorro(trx.getCuentadestino());
+
+
+		if (trx.getTipo().equals("retiro")) {
+			if (destino == null)
+				throw new Exception("La cuentas no existe");
+
+			if ( trx.getCuentadestino() != null) {
+				
+				Double saldoDes = destino.getSaldoCuenta() - trx.getMonto();
+
+				destino.setSaldoCuenta(saldoDes);
+
+				Transaccion tDes = new Transaccion();
+
+				tDes.setCuent(trx.getCuentadestino());
+				tDes.setFecha(new Date());
+				tDes.setTipoTransaccion("retiro");
+				tDes.setMonto(trx.getMonto());
+
+			
+				destino.addTransaccion(tDes);
+				
+				transaccionDao.nuevaTransaccion(tDes);
+				
+				cuentaDao.update(destino);
+
+				res = new Respuesta();
+				res.setCodigo(1);
+				res.setMensaje("Ok");
+			
+			}
+		}
+		return res;
+	}
+	
 	public List<Object[]> vencimientoPagos(){
 		List<Pago> ps = new ArrayList<>();
 		List<Object[]> pagos = transaccionDao.vencimientoCreditos();

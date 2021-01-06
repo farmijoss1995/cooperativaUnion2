@@ -110,6 +110,12 @@ public class CuentaAhorro{
 	public void setCreditos(List<PolizaPres> creditos) {
 		this.creditos = creditos;
 	}
+
+	@Override
+	public String toString() {
+		return "CuentaAhorro [numeroCuenta=" + numeroCuenta + ", saldoCuenta=" + saldoCuenta + ", usuario=" + usuario
+				+ ", listaTra=" + listaTra + ", listaSolicitud=" + listaSolicitud + ", creditos=" + creditos + "]";
+	}
 	
 	
 	
