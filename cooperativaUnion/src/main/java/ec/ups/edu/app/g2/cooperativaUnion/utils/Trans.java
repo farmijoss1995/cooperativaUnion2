@@ -5,14 +5,12 @@ import java.io.Serializable;
 import ec.ups.edu.app.g2.cooperativaUnion.EN.CuentaAhorro;
 
 public class Trans implements Serializable {
+
 	private String cuentaorigen;
 	private String cuentadestino;
 	private Double monto;
 	private String tipo;
 
-
-	
-	
 	public String getTipo() {
 		return tipo;
 	}
@@ -45,6 +43,10 @@ public class Trans implements Serializable {
 		this.monto = monto;
 	}
 
+	@Override
+	public String toString() {
+		return "Trans [cuentaorigen=" + cuentaorigen + ", cuentadestino=" + cuentadestino + ", monto=" + monto
+				+ ", tipo=" + tipo + "]";
 
-	
+	}
 }

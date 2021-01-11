@@ -148,12 +148,12 @@ public class TransaccionON {
 
 	public Respuesta Transacciones(Trans trx) throws Exception {
 
-		Respuesta res = null;
+		Respuesta res = new Respuesta();
 		CuentaAhorro origen = cuentaDao.buscarCuentaAhorro(trx.getCuentaorigen());
 		CuentaAhorro destino = cuentaDao.buscarCuentaAhorro(trx.getCuentadestino());
-System.out.println(origen.toString());
+		System.out.println(trx.toString());
 
-		if (trx.getTipo().equals("tranferencia")) {
+		if (trx.getTipo().equals("transferencia")) {
 			if (destino == null)
 				throw new Exception("La cuentas no existe");
 
@@ -167,7 +167,7 @@ System.out.println(origen.toString());
 				Transaccion tOri = new Transaccion();
 				tOri.setCuent(trx.getCuentaorigen());
 				tOri.setFecha(new Date());
-				tOri.setTipoTransaccion("tranferencia");
+				tOri.setTipoTransaccion("transferencia");
 				tOri.setMonto(trx.getMonto());
 
 				Transaccion tDes = new Transaccion();
@@ -190,10 +190,13 @@ System.out.println(origen.toString());
 				for (CuentaAhorro cs : cuentas) {
 					System.out.println(cs.toString());
 				}*/
-				res = new Respuesta();
+			
 				res.setCodigo(1);
 				res.setMensaje("Ok");
 			//	res.setCuentasafectadas(cuentas);
+			}
+			else {
+				System.out.println("ERROR");
 			}
 		}
 		return res;

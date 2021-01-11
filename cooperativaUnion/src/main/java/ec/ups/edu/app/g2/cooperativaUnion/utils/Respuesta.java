@@ -9,7 +9,7 @@ public class Respuesta {
 	private int codigo;
 	private String mensaje;
 	
-	private List<CuentaAhorro> cuentasafectadas;
+	//private List<CuentaAhorro> cuentasafectadas;
 	
 	public int getCodigo() {
 		return codigo;
@@ -23,11 +23,11 @@ public class Respuesta {
 	public void setMensaje(String mensaje) {
 		this.mensaje = mensaje;
 	}
-	public List<CuentaAhorro> getCuentasafectadas() {
+	/*public List<CuentaAhorro> getCuentasafectadas() {
 		return cuentasafectadas;
 	}
 	public void setCuentasafectadas(List<CuentaAhorro> cuentasafectadas) {
 		this.cuentasafectadas = cuentasafectadas;
-	}
+	}*/
 
 }

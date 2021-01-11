@@ -9,7 +9,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
 
-@Path("/cuenta")
+@Path("cuenta")
 public class TransaccionServiceRest {
 	
 	@Inject
@@ -23,6 +23,36 @@ public class TransaccionServiceRest {
 		Respuesta r = new Respuesta();
 		try {
 			r = on.Transacciones(trx);
+		} catch (Exception e) {
+		e.printStackTrace();
+		r.setCodigo(99);
+		r.setMensaje(e.getMessage());
+		}
+		return r;
+	}	
+	@POST
+	@Path("/deposito")
+	@Produces("application/json")
+	@Consumes("application/json")
+	public Respuesta deposito( Trans deposito) {
+		Respuesta r = new Respuesta();
+		try {
+			r = on.Deposito(deposito);
+		} catch (Exception e) {
+		e.printStackTrace();
+		r.setCodigo(99);
+		r.setMensaje(e.getMessage());
+		}
+		return r;
+	}	
+	@POST
+	@Path("/retiro")
+	@Produces("application/json")
+	@Consumes("application/json")
+	public Respuesta retiro( Trans retiro) {
+		Respuesta r = new Respuesta();
+		try {
+			r = on.Retiro(retiro);
 		} catch (Exception e) {
 		e.printStackTrace();
 		r.setCodigo(99);
